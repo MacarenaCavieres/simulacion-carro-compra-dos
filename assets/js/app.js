@@ -22,9 +22,25 @@ const pintarCaririto = (e) => {
         carritoArray.push(producto);
     } else {
         carritoArray[index].cantidad++;
+        carritoArray[index].total = carritoArray[index].cantidad * carritoArray[index].precio;
     }
 
     console.log(carritoArray);
+    llenarCarrito();
+};
+
+const llenarCarrito = () => {
+    carrito.textContent = "";
+
+    carritoArray.forEach((item) => {
+        const clone = template.content.firstElementChild.cloneNode(true);
+        clone.querySelector(".lead").textContent = item.nombre;
+        clone.querySelector(".cantidad").textContent = item.cantidad;
+        clone.querySelector(".precio").textContent = item.total;
+
+        fragment.appendChild(clone);
+    });
+    carrito.appendChild(fragment);
 };
 
 btnes.forEach((btn) => btn.addEventListener("click", pintarCaririto));
