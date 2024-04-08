@@ -73,4 +73,16 @@ carrito.addEventListener("click", (e) => {
     }
 });
 
+carrito.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete")) {
+        const nombreFruta = e.target.parentElement.previousElementSibling.textContent;
+
+        const index = carritoArray.findIndex((item) => item.nombre === nombreFruta);
+
+        carritoArray.splice(index, 1);
+        llenarCarrito();
+        agregarTotal();
+    }
+});
+
 btnes.forEach((btn) => btn.addEventListener("click", pintarCarrito));
