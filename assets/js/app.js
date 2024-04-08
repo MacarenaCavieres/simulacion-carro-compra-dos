@@ -8,7 +8,7 @@ const fragmentTotal = document.createDocumentFragment();
 
 const carritoArray = [];
 
-const pintarCaririto = (e) => {
+const pintarCarrito = (e) => {
     const producto = {
         nombre: e.target.dataset.fruta,
         cantidad: 1,
@@ -25,7 +25,6 @@ const pintarCaririto = (e) => {
         carritoArray[index].total = carritoArray[index].cantidad * carritoArray[index].precio;
     }
 
-    console.log(carritoArray);
     llenarCarrito();
     agregarTotal();
 };
@@ -51,7 +50,6 @@ const agregarTotal = () => {
     carritoArray.forEach((item) => {
         all += item.total;
     });
-    console.log(all);
 
     const clone = templateTotal.content.firstElementChild.cloneNode(true);
     clone.querySelector(".total").textContent = `$${all}`;
@@ -60,4 +58,19 @@ const agregarTotal = () => {
     sumaTotal.appendChild(fragmentTotal);
 };
 
-btnes.forEach((btn) => btn.addEventListener("click", pintarCaririto));
+carrito.addEventListener("click", (e) => {
+    if (e.target.classList.contains("disminuir")) {
+        const nombreFruta = e.target.parentElement.previousElementSibling.textContent;
+
+        const index = carritoArray.findIndex((item) => item.nombre === nombreFruta);
+
+        if (carritoArray[index].cantidad > 0) {
+            carritoArray[index].cantidad--;
+            carritoArray[index].total = carritoArray[index].cantidad * carritoArray[index].precio;
+            llenarCarrito();
+            agregarTotal();
+        }
+    }
+});
+
+btnes.forEach((btn) => btn.addEventListener("click", pintarCarrito));
