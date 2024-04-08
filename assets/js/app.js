@@ -27,6 +27,7 @@ const pintarCaririto = (e) => {
 
     console.log(carritoArray);
     llenarCarrito();
+    agregarTotal();
 };
 
 const llenarCarrito = () => {
@@ -41,6 +42,22 @@ const llenarCarrito = () => {
         fragment.appendChild(clone);
     });
     carrito.appendChild(fragment);
+};
+
+const agregarTotal = () => {
+    sumaTotal.textContent = "";
+    let all = 0;
+
+    carritoArray.forEach((item) => {
+        all += item.total;
+    });
+    console.log(all);
+
+    const clone = templateTotal.content.firstElementChild.cloneNode(true);
+    clone.querySelector(".total").textContent = `$${all}`;
+
+    fragmentTotal.appendChild(clone);
+    sumaTotal.appendChild(fragmentTotal);
 };
 
 btnes.forEach((btn) => btn.addEventListener("click", pintarCaririto));
